@@ -25,16 +25,8 @@ app.get("/", async (req, res) => {
 app.post("/", async (req, res) => {
   console.log(req.body);
   try{
-    let queryParameters = [];
-    if(req.body.type)
-      queryParameters.push("type=" + req.body.type);
-    if(req.body.participants)
-      queryParameters.push("participants=" + req.body.participants);
-    if(queryParameters.length === 0)
-      return res.redirect("/");
-
-    let queryParameter = queryParameters.join("&");
-    const responce = await axios.get(basicURL + "filter?" + queryParameter);
+    const responce = await axios.get(`${basicURL}filter?
+      type=${req.body.type}&participants=${req.body.participants}`);
     const result = responce.data;
 
     let randomIndex = Math.floor(Math.random() * result.length);
